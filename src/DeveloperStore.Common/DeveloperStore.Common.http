@@ -1,0 +1,6 @@
+@DeveloperStore.Common_HostAddress = http://localhost:5063
+
+GET {{DeveloperStore.Common_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
