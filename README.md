@@ -17,7 +17,7 @@ API para gerenciamento de vendas, implementada com .NET, seguindo os princípios
 - MediatR
 - AutoMapper
 - Entity Framework Core
-- PostgreSQL (ou banco configurado)
+- PostgreSQL 
 - Swagger/OpenAPI
 
 ## Como usar
@@ -26,7 +26,7 @@ API para gerenciamento de vendas, implementada com .NET, seguindo os princípios
 
 - .NET 7 SDK instalado
 - Banco de dados PostgreSQL configurado
-- Docker (opcional, se usar containers)
+- Docker 
 
 ### Configuração
 
@@ -59,13 +59,13 @@ API para gerenciamento de vendas, implementada com .NET, seguindo os princípios
 
 ## Endpoints principais
 
-| Método | Endpoint           | Descrição                   |
-|--------|--------------------|-----------------------------|
-| GET    | /api/vendas        | Lista todas as vendas        |
-| GET    | /api/vendas/{id}   | Busca venda por ID           |
-| POST   | /api/vendas        | Cria nova venda              |
-| PUT    | /api/vendas        | Atualiza venda existente     |
-| DELETE | /api/vendas/{id}   | Deleta venda                 |
+| Método | Endpoint                 | Descrição                   |
+|--------|--------------------------|-----------------------------|
+| GET    | /api/BuscarVendas        | Lista todas as vendas        |
+| GET    | /api/BuscarVendas/{id}   | Busca venda por ID           |
+| POST   | /api/CriarVenda          | Cria nova venda              |
+| PUT    | /api/AlterarVenda        | Atualiza venda existente     |
+| DELETE | /api/DeletarVenda/{id}   | Deleta venda                 |
 
 ## Regras de negócio importantes
 
@@ -81,3 +81,4 @@ Pull requests são bem-vindos! Para grandes mudanças, abra uma issue primeiro p
 ## Licença
 
 MIT License — veja o arquivo LICENSE para detalhes.
+
