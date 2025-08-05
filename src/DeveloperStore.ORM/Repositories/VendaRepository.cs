@@ -27,6 +27,8 @@ namespace DeveloperStore.ORM.Repositories
             public async Task<List<Venda>> GetAllAsync(CancellationToken cancellationToken)
             {
                 return await _context.Vendas
+                    .Include(v => v.Cliente)  
+                    .Include(v => v.Filial)
                     .Include(v => v.Itens)
                     .ToListAsync(cancellationToken);
             }

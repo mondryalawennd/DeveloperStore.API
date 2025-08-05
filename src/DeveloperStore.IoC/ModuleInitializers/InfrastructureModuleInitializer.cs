@@ -16,6 +16,9 @@ namespace DeveloperStore.IoC.ModuleInitializers
         {
             builder.Services.AddScoped<DbContext>(provider => provider.GetRequiredService<DefaultContext>());
             builder.Services.AddScoped<IVendaRepository, VendaRepository>();
+            builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
+            builder.Services.AddScoped<IFilialRepository, FilialRepository>();
+            builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
             builder.Services.AddSingleton<VendaEventosLogger>();
         }
     }

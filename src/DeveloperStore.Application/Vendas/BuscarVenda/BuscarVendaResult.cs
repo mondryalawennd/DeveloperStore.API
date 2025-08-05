@@ -15,6 +15,8 @@ namespace DeveloperStore.Application.Vendas.BuscarVenda
         public int FilialId { get; set; }
         public decimal ValorTotal { get; set; }
         public bool Cancelado { get; set; } = false;
+        public string ClienteNome { get; set; } = string.Empty;
+        public string FilialNome { get; set; } = string.Empty;
 
         public List<ItemVendaResult> Itens { get; set; } = new();
     }

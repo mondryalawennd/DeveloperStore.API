@@ -18,9 +18,13 @@ namespace DeveloperStore.Application.Vendas.BuscarVendas
             CreateMap<ItemVendaDTO, ItemVenda>();
             CreateMap<ItemVenda, ItemVendaDTO>();
 
-            CreateMap<Venda, BuscarVendasResult>();
+            CreateMap<Venda, BuscarVendasResult>()
+             .ForMember(dest => dest.ClienteNome, opt => opt.MapFrom(src => src.Cliente.Nome))
+             .ForMember(dest => dest.FilialNome, opt => opt.MapFrom(src => src.Filial.Nome));
+
             CreateMap<ItemVenda, ItensVendaResult>();
             CreateMap<ItemVenda, ItemVendaDTO>();
+
         }
     }
     }

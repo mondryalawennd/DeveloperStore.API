@@ -1,14 +1,16 @@
 ﻿using AutoMapper;
+using DeveloperStore.Application.Queries;
 using DeveloperStore.Application.Vendas.AlterarVenda;
 using DeveloperStore.Application.Vendas.BuscarVenda;
 using DeveloperStore.Application.Vendas.BuscarVendas;
 using DeveloperStore.Application.Vendas.CriarVenda;
 using DeveloperStore.Common.Validation;
 using DeveloperStore.WebAPI.Common;
-using DeveloperStore.WebAPI.Features.BuscarVenda;
-using DeveloperStore.WebAPI.Features.CriarVenda;
+using DeveloperStore.WebAPI.Features.Venda.BuscarVenda;
+using DeveloperStore.WebAPI.Features.Venda.CriarVenda;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DeveloperStore.WebAPI.Features
 {
@@ -24,6 +26,7 @@ namespace DeveloperStore.WebAPI.Features
             _mediator = mediator;
             _mapper = mapper;
         }
+
         [HttpPost("CriarVenda")]
         [ProducesResponseType(typeof(ApiResponseWithData<CriarVendaResponse>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
@@ -59,6 +62,21 @@ namespace DeveloperStore.WebAPI.Features
             });
         }
 
+        [HttpPut("AlterarVenda")]
+        public async Task<IActionResult> AlterarVenda([FromBody] AlterarVendaCommand command, CancellationToken cancellationToken)
+        {
+            if (command == null || command.Itens == null || !command.Itens.Any())
+            {
+                return BadRequest("Dados da venda ou itens inválidos.");
+            }
+
+            var result = await _mediator.Send(command, cancellationToken);
+
+            if (!result.Sucesso)
+                return BadRequest(result.Mensagem);
+
+            return Ok(result);
+        }
 
         [HttpGet("BuscarVenda/{id}")]
         public async Task<IActionResult> BuscarVenda([FromRoute] int id, CancellationToken cancellationToken)
@@ -117,22 +135,12 @@ namespace DeveloperStore.WebAPI.Features
             });
         }
 
-
-        [HttpPut("AlterarVenda")]
-        public async Task<IActionResult> AlterarVenda([FromBody] AlterarVendaCommand command, CancellationToken cancellationToken)
+        [HttpGet("ultimo-numero")]
+        public async Task<IActionResult> ObterUltimoNumero()
         {
-            if (command == null || command.Itens == null || !command.Itens.Any())
-            {
-                return BadRequest("Dados da venda ou itens inválidos.");
-            }
-
-            var result = await _mediator.Send(command, cancellationToken);
-
-            if (!result.Sucesso)
-                return BadRequest(result.Mensagem);
-
-            return Ok(result);
+            var query = new ObterUltimoNumeroVendaQuery();
+            var result = await _mediator.Send(query);
+            return Ok(result.NumeroVenda);
         }
-
     }
 }

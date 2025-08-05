@@ -1,32 +1,24 @@
 ﻿using DeveloperStore.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DeveloperStore.Application.Vendas.BuscarVendas
+namespace DeveloperStore.WebAPI.Features.Venda.BuscarVenda
 {
-    public class BuscarVendasResult
+    public class BuscarVendaResponse
     {
         public int Id { get; set; }
         public string NumeroVenda { get; set; } = string.Empty;
         public DateTime DataVenda { get; set; }
         public int ClienteId { get; set; }
         public int FilialId { get; set; }
-        public decimal ValorTotal { get; set; }
-        public bool Cancelado { get; set; } = false;
         public string ClienteNome { get; set; } = string.Empty;
         public string FilialNome { get; set; } = string.Empty;
-
-
-        public List<ItensVendaResult> Itens { get; set; } = new List<ItensVendaResult>();
+        public decimal ValorTotal { get; set; }
+        public bool Cancelado { get; set; } = false;
+        public List<ItemVendaResponse> Itens { get; set; } = new List<ItemVendaResponse>();
     }
 
-    public class ItensVendaResult
+    public class ItemVendaResponse
     {
         public int ProdutoId { get; set; }
-        public string NomeProduto { get; set; } = string.Empty;
         public int Quantidade { get; set; }
         public decimal PrecoUnitario { get; set; }
         public decimal Desconto { get; set; }
