@@ -25,7 +25,7 @@ Este projeto está organizado seguindo boas práticas de arquitetura de software
 
 ### Requisitos
 
-- .NET 7 SDK instalado
+- .NET 8 SDK instalado
 - Banco de dados PostgreSQL configurado
 - Docker 
 
@@ -82,5 +82,6 @@ Pull requests são bem-vindos! Para grandes mudanças, abra uma issue primeiro p
 ## Licença
 
 MIT License — veja o arquivo LICENSE para detalhes.
+
 
 
