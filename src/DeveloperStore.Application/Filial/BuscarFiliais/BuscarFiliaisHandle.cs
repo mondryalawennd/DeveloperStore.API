@@ -4,8 +4,8 @@ using DeveloperStore.Domain.Repositories;
 using MediatR;
 
 namespace DeveloperStore.Application.Filial.BuscarFiliais
-{
-    public class BuscarFiliaisHandle : IRequest<List<BuscarFiliaisResult>>
+{ 
+    public class BuscarFiliaisHandle : IRequestHandler<BuscarFiliaisCommand, List<BuscarFiliaisResult>>
     {
 
         private readonly IFilialRepository _filialRepository;
@@ -17,10 +17,10 @@ namespace DeveloperStore.Application.Filial.BuscarFiliais
             _mapper = mapper;
         }
 
-        public async Task<List<FilialDTO>> Handle(BuscarFiliaisCommand request, CancellationToken cancellationToken)
+        public async Task<List<BuscarFiliaisResult>> Handle(BuscarFiliaisCommand request, CancellationToken cancellationToken)
         {
             var clientes = await _filialRepository.GetAllAsync(cancellationToken);
-            return _mapper.Map<List<FilialDTO>>(clientes);
+            return _mapper.Map<List<BuscarFiliaisResult>>(clientes);
         }
     }
 }

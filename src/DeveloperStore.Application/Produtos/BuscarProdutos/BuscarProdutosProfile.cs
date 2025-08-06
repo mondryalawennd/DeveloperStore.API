@@ -1,13 +1,18 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DeveloperStore.Application.DTO;
+using DeveloperStore.Application.Vendas.BuscarVendas;
+using Produto_ = DeveloperStore.Domain.Entities.Produto;
 
 namespace DeveloperStore.Application.Produtos.BuscarProdutos
 {
-    public class BuscarProdutosProfile: Profile
+    public class BuscarProdutosProfile : Profile
     {
+
+        public BuscarProdutosProfile()
+        {
+            CreateMap<Produto_, BuscarProdutosResult>();
+            CreateMap<Produto_, ProdutoDTO>();
+
+        }
     }
 }

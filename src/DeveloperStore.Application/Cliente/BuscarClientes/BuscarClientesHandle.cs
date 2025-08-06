@@ -6,7 +6,7 @@ using MediatR;
 
 namespace DeveloperStore.Application.Cliente.BuscarClientes
 {
-    public class BuscarClientesHandle : IRequest<List<BuscarClientesResult>>
+    public class BuscarClientesHandle : IRequestHandler<BuscarClientesCommand, List<BuscarClientesResult>>
     {
        
         private readonly IClienteRepository _clienteRepository;
@@ -18,10 +18,10 @@ namespace DeveloperStore.Application.Cliente.BuscarClientes
             _mapper = mapper;
         }
 
-        public async Task<List<ClienteDTO>> Handle(BuscarClientesCommand request, CancellationToken cancellationToken)
+        public async Task<List<BuscarClientesResult>> Handle(BuscarClientesCommand request, CancellationToken cancellationToken)
         {
             var clientes = await _clienteRepository.GetAllAsync(cancellationToken);
-            return _mapper.Map<List<ClienteDTO>>(clientes);
+            return _mapper.Map<List<BuscarClientesResult>>(clientes);
         }
     }
 }

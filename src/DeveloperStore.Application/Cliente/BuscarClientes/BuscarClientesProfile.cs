@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DeveloperStore.Application.DTO;
 using Clientes = DeveloperStore.Domain.Entities.Cliente;
 
 namespace DeveloperStore.Application.Cliente.BuscarClientes
@@ -7,7 +8,10 @@ namespace DeveloperStore.Application.Cliente.BuscarClientes
     {
         public BuscarClientesProfile()
         {
-            CreateMap<BuscarClientesResult, Clientes>();
+            CreateMap<Clientes, BuscarClientesResult>();
+            CreateMap<Clientes, ClienteDTO>();
+
+       
         }
     }
 }

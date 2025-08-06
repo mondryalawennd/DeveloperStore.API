@@ -1,7 +1,6 @@
 using Serilog;
 using DeveloperStore.Common.Logging;
 using DeveloperStore.Common.HealthChecks;
-using DeveloperStore.Common.Security;
 using DeveloperStore.IoC;
 using DeveloperStore.ORM;
 using Microsoft.EntityFrameworkCore;
@@ -9,9 +8,6 @@ using DeveloperStore.Application;
 using MediatR;
 using DeveloperStore.WebAPI.Middleware;
 using DeveloperStore.Common.Validation;
-using DeveloperStore.Application.Vendas.CriarVenda;
-using AutoMapper;
-
 
 namespace DeveloperStore.WebAPI
 {
@@ -31,6 +27,7 @@ namespace DeveloperStore.WebAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.AddBasicHealthChecks();
             builder.Services.AddSwaggerGen();
+         
 
             // DB Context
             builder.Services.AddDbContext<DefaultContext>(options =>
@@ -44,7 +41,8 @@ namespace DeveloperStore.WebAPI
             builder.RegisterDependencies();
 
             builder.Services.AddAutoMapper(new[] { typeof(Program).Assembly, typeof(ApplicationLayer).Assembly });
-            builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
+            builder.Services.AddMediatR(cfg =>  { cfg.RegisterServicesFromAssemblies(typeof(ApplicationLayer).Assembly,typeof(Program).Assembly ); });
+
             builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
             builder.Services.AddCors(options =>

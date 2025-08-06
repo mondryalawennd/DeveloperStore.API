@@ -1,18 +1,26 @@
-version: "3.9"
+version: '3.9'
 
 services:
   postgres:
-    image: postgres:latest
-    container_name: dev-postgres
-    restart: unless-stopped
+    image: postgres:15
+    container_name: developerstore-postgres
+    environment:
+      POSTGRES_DB: developerstore
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: senha123
     ports:
       - "5432:5432"
-    environment:
-      POSTGRES_DB: developerstore_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: senha1223
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: developerstore-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672" # UI
+    restart: always
 
 volumes:
   postgres_data:

@@ -1,13 +1,6 @@
 ﻿using AutoMapper;
-using DeveloperStore.Application.Vendas.BuscarVenda;
 using DeveloperStore.Domain.Repositories;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace DeveloperStore.Application.Vendas.BuscarVendas
 {
     public class BuscarVendasHandler : IRequestHandler<BuscarVendasCommand, List<BuscarVendasResult>>
