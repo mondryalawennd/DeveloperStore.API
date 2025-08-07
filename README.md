@@ -33,7 +33,4 @@ Contribuições são bem-vindas! Para contribuir:
 4. Faça push para a branch (\`git push origin minha-feature\`).
 5. Abra um Pull Request.
 
-## Contato
 
-Para dúvidas ou sugestões, entre em contato: **mondryalawennd@example.com**
-EOF
