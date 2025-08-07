@@ -3,6 +3,9 @@
 API para gerenciamento de vendas, implementada com .NET, seguindo os princípios de DDD (Domain-Driven Design) e usando MediatR, AutoMapper e outras boas práticas.
 Este projeto está organizado seguindo boas práticas de arquitetura de software, inspirado em padrões como Clean Architecture, promovendo uma separação clara de responsabilidades para facilitar a manutenção, testes e escalabilidade.
 
+Para verificar o front dessa aplicação: https://github.com/mondryalawennd/Developerstore.APP
+
+
 ## Funcionalidades
 
 - CRUD completo para vendas (Criar, Buscar, Alterar, Deletar)
@@ -82,6 +85,7 @@ Pull requests são bem-vindos! Para grandes mudanças, abra uma issue primeiro p
 ## Licença
 
 MIT License — veja o arquivo LICENSE para detalhes.
+
 
 
 
