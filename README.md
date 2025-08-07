@@ -1,4 +1,4 @@
-cat > README.md << EOF
+
 # DeveloperStore
 
 Este repositório contém os arquivos zipados do projeto **DeveloperStore**, incluindo APIs e aplicações para desenvolvimento.
