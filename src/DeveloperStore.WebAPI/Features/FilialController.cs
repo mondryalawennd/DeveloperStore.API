@@ -20,7 +20,7 @@ namespace DeveloperStore.WebAPI.Features
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("BuscarFiliais")]
         public async Task<IActionResult> BuscarFiliais(CancellationToken cancellationToken)
         {
             var command = new BuscarFiliaisCommand();
@@ -29,7 +29,7 @@ namespace DeveloperStore.WebAPI.Features
             return Ok(new ApiResponseWithData<List<BuscarFiliaisResponse>>
             {
                 Success = true,
-                Message = "Filiais recuperadas com sucesso",
+                Message = "Clientes recuperados com sucesso",
                 Data = _mapper.Map<List<BuscarFiliaisResponse>>(result)
             });
         }

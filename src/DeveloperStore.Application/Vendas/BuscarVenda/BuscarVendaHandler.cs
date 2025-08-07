@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DeveloperStore.Application.DTO;
 using DeveloperStore.Domain.Repositories;
 using MediatR;
 using System;
@@ -23,7 +24,27 @@ namespace DeveloperStore.Application.Vendas.BuscarVenda
         public async Task<BuscarVendaResult> Handle(BuscarVendaCommand request, CancellationToken cancellationToken)
         {
             var venda = await _vendaRepository.GetByIdAsync(request.VendaId);
-            return _mapper.Map<BuscarVendaResult>(venda);
+            if (venda == null)
+                return null;
+
+            return new BuscarVendaResult
+            {
+                Id = venda.Id,
+                NumeroVenda = venda.NumeroVenda,
+                ClienteId = venda.ClienteId,
+                FilialId = venda.FilialId,
+                DataVenda = venda.DataVenda,
+                ValorTotal = venda.ValorTotal, 
+                Cancelado = venda.Cancelado,
+                Itens = venda.Itens.Select(i => new ItemVendaResult
+                {
+                    ProdutoId = i.ProdutoId,
+                    Quantidade = i.Quantidade,
+                    PrecoUnitario = i.PrecoUnitario,
+                    Desconto = i.Desconto,
+                    Cancelado = i.Cancelado
+                }).ToList()
+            };
         }
     }
 }

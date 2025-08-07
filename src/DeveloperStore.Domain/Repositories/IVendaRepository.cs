@@ -13,6 +13,6 @@ namespace DeveloperStore.Domain.Repositories
         Task<List<Venda>> GetAllAsync(CancellationToken cancellationToken);
         Task AddAsync(Venda venda);
         Task UpdateAsync(Venda venda);
-        Task DeleteAsync(int id);
+        Task<bool> DeleteAsync(int id);
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DeveloperStore.Application.Vendas.DeletarVenda
 {
-    public class DeletarVendaCommand : IRequest<DeletarVendaResult>
+    public class DeletarVendaCommand : IRequest<DeletarVendaResponse>
     {
         public int Id { get; set; }
 

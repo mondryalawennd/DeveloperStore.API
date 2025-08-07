@@ -22,36 +22,48 @@ namespace DeveloperStore.Domain.Entities
 
         public decimal ValorTotal { get; set; }
 
-        public Venda(string numeroVenda, DateTime dataVenda, int clienteId, int filialId)
+        public Venda(string numeroVenda, DateTime dataVenda, int clienteId, int filialId, decimal valorTotal)
         {
             NumeroVenda = numeroVenda;
             DataVenda = dataVenda;
             ClienteId = clienteId;
             FilialId = filialId;
             Cancelado = false;
-            ValorTotal = 0;
+            ValorTotal = valorTotal;
             _itens = new List<ItemVenda>();
         }
 
         // Adiciona um item com as regras de negócio
         public void AdicionarItem(int produtoId, int quantidade, decimal precoUnitario)
         {
-            var quantidadeAtualDoProduto = _itens
-                .Where(i => i.ProdutoId == produtoId && !i.Cancelado)
-                .Sum(i => i.Quantidade);
+            var itemExistente = _itens.FirstOrDefault(i => i.ProdutoId == produtoId);
 
-            ValidarItens(quantidadeAtualDoProduto, quantidade);
+            if (itemExistente != null)
+            {
+                itemExistente.AtualizarQuantidade(quantidade);
+                itemExistente.AtualizarPreco(precoUnitario);
+            }
+            else
+            {
+                var item = new ItemVenda(produtoId, quantidade, precoUnitario);
+                _itens.Add(item);
+            }
 
-             var item = new ItemVenda(produtoId, quantidade, precoUnitario);
-            _itens.Add(item);
-            RecalcularTotais();
+           // RecalcularTotais();
         }
+      
+
         private void ValidarItens(int quantidadeAtualDoProduto, int quantidade)
         {
            
             //Soma os itens do mesmo ProdutoId que já foram adicionados e não estão cancelados.
             if ((quantidadeAtualDoProduto + quantidade) > 20)
                 throw new InvalidOperationException("Não é permitido vender mais de 20 itens idênticos.");
+        }
+        public void LimparItens()
+        {
+            _itens.Clear();
+           // RecalcularTotais();
         }
 
         public void AlterarDados(string numeroVenda, DateTime dataVenda, int clienteId, int filialId)

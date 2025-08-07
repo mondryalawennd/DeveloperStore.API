@@ -1,15 +1,15 @@
 version: '3.9'
 
 services:
-  postgres:
+  postgres: 
     image: postgres:15
     container_name: developerstore-postgres
     environment:
       POSTGRES_DB: developerstore
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: senha123
+      POSTGRES_PASSWORD: _senha_dever@
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: always
@@ -24,3 +24,4 @@ services:
 
 volumes:
   postgres_data:
+  

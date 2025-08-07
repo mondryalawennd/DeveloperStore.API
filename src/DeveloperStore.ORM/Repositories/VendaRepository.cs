@@ -45,15 +45,22 @@ namespace DeveloperStore.ORM.Repositories
                 await _context.SaveChangesAsync();
             }
 
-            public async Task DeleteAsync(int id)
+            public async Task<bool> DeleteAsync(int id)
             {
                 var venda = await GetByIdAsync(id);
+                if (venda == null)
+                    return false;
+
                 if (venda != null)
                 {
                     _context.Vendas.Remove(venda);
                     await _context.SaveChangesAsync();
+                   
                 }
+
+                return true;
             }
+
         }
     }
 }

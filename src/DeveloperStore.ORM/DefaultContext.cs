@@ -1,4 +1,5 @@
-﻿using DeveloperStore.Domain.Entities;
+﻿using DeveloperStore.Domain.Common;
+using DeveloperStore.Domain.Entities;
 using DeveloperStore.ORM.Mapping;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
@@ -20,6 +21,7 @@ namespace DeveloperStore.ORM
         public DbSet<Cliente> Cliente { get; set; }
         public DbSet<Filial> Filial { get; set; }
         public DbSet<Produto> Produto { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,7 +30,9 @@ namespace DeveloperStore.ORM
             modelBuilder.ApplyConfiguration(new ItemVendaConfiguration());
             modelBuilder.ApplyConfiguration(new FilialConfiguration());
             modelBuilder.ApplyConfiguration(new ClienteConfiguration());
+            modelBuilder.ApplyConfiguration(new UsuarioConfiguration());
             modelBuilder.ApplyConfiguration(new ProdutoConfiguration());
+            modelBuilder.Ignore<DomainEvent>();
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 

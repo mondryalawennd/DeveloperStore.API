@@ -8,6 +8,9 @@ namespace DeveloperStore.WebAPI.Features.Venda.DeletarVenda
         public DeletarVendaProfile()
         {
             CreateMap<DeletarVendaRequest, DeletarVendaCommand>();
+
+            CreateMap<int, DeletarVendaCommand>()
+            .ConstructUsing(id => new Application.Vendas.DeletarVenda.DeletarVendaCommand(id));
         }
     }
 }

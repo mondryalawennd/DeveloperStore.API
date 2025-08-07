@@ -32,7 +32,8 @@ namespace DeveloperStore.Application.Vendas.CriarVenda
                     numeroVenda: request.NumeroVenda,
                     dataVenda: dataVendaUtc,
                     clienteId: request.ClienteId,
-                    filialId: request.FilialId
+                    filialId: request.FilialId,
+                    valorTotal: request.ValorTotal
                 );
 
             foreach (var itemDto in request.Itens)

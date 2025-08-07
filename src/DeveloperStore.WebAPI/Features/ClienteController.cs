@@ -22,7 +22,7 @@ namespace DeveloperStore.WebAPI.Features
         }
 
 
-        [HttpGet]
+        [HttpGet("BuscarClientes")]
         public async Task<IActionResult> BuscarClientes(CancellationToken cancellationToken)
         {
             var command = new BuscarClientesCommand();

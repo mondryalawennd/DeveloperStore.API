@@ -29,7 +29,7 @@ namespace DeveloperStore.Application.Vendas.NumeroVenda
             {
                 return new ObterUltimoNumeroVendaResult
                 {
-                    NumeroVenda = (numero + 1).ToString("D2")
+                    NumeroVenda = (numero + 1).ToString("D3")  
                 };
             }
 

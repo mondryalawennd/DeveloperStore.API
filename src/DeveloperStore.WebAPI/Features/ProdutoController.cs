@@ -20,7 +20,7 @@ namespace DeveloperStore.WebAPI.Features
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("BuscarProdutos")]
         public async Task<IActionResult> BuscarProdutos(CancellationToken cancellationToken)
         {
             var command = new BuscarProdutosCommand();

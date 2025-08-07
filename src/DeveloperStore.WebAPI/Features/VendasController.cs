@@ -3,14 +3,20 @@ using DeveloperStore.Application.Queries;
 using DeveloperStore.Application.Vendas.AlterarVenda;
 using DeveloperStore.Application.Vendas.BuscarVenda;
 using DeveloperStore.Application.Vendas.BuscarVendas;
+using DeveloperStore.Application.Vendas.CancelarVenda;
 using DeveloperStore.Application.Vendas.CriarVenda;
+using DeveloperStore.Application.Vendas.DeletarVenda;
 using DeveloperStore.Common.Validation;
 using DeveloperStore.WebAPI.Common;
 using DeveloperStore.WebAPI.Features.Venda.BuscarVenda;
+using DeveloperStore.WebAPI.Features.Venda.CancelarVenda;
 using DeveloperStore.WebAPI.Features.Venda.CriarVenda;
+using DeveloperStore.WebAPI.Features.Venda.DeletarVenda;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace DeveloperStore.WebAPI.Features
 {
@@ -26,7 +32,8 @@ namespace DeveloperStore.WebAPI.Features
             _mediator = mediator;
             _mapper = mapper;
         }
-
+       
+        //[Authorize]
         [HttpPost("CriarVenda")]
         [ProducesResponseType(typeof(ApiResponseWithData<CriarVendaResponse>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
@@ -62,7 +69,8 @@ namespace DeveloperStore.WebAPI.Features
             });
         }
 
-        [HttpPut("AlterarVenda")]
+        //[Authorize]
+        [HttpPut("AlterarVenda/{id}")]
         public async Task<IActionResult> AlterarVenda([FromBody] AlterarVendaCommand command, CancellationToken cancellationToken)
         {
             if (command == null || command.Itens == null || !command.Itens.Any())
@@ -70,6 +78,40 @@ namespace DeveloperStore.WebAPI.Features
                 return BadRequest("Dados da venda ou itens inválidos.");
             }
 
+            var result = await _mediator.Send(command, cancellationToken);
+
+            if (!result.Sucesso)
+                return BadRequest(result.Mensagem);
+
+            return Ok(result);
+        }
+
+        //[Authorize]
+        [HttpDelete("DeletarVenda/{id}")]
+        public async Task<IActionResult> DeletarVenda(int id, CancellationToken cancellationToken)
+        {
+            var request = new DeletarVendaRequest { Id = id };
+            var validator = new DeletarVendaRequestValidator();
+            var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+            if (!validationResult.IsValid)
+                return BadRequest(validationResult.Errors);
+
+            var command = _mapper.Map<DeletarVendaCommand>(request.Id);
+            await _mediator.Send(command, cancellationToken);
+
+            return Ok(new ApiResponse
+            {
+                Success = true,
+                Message = "Venda apagada com sucesso"
+            });
+        }
+
+        [HttpPut("CancelarVenda/{id}")]
+        public async Task<IActionResult> CancelarVenda(int id, CancellationToken cancellationToken)
+        {
+            var request = new CancelarVendaRequest { Id = id };
+            var command = _mapper.Map<CancelarVendaCommand>(request.Id);
             var result = await _mediator.Send(command, cancellationToken);
 
             if (!result.Sucesso)
@@ -116,7 +158,7 @@ namespace DeveloperStore.WebAPI.Features
             return Ok(new ApiResponseWithData<BuscarVendaResponse>
             {
                 Success = true,
-                Message = "Venda encontrada com sucesso",
+              //  Message = "Venda encontrada com sucesso",
                 Data = _mapper.Map<BuscarVendaResponse>(result)
             });
         }
@@ -135,12 +177,14 @@ namespace DeveloperStore.WebAPI.Features
             });
         }
 
-        [HttpGet("ultimo-numero")]
-        public async Task<IActionResult> ObterUltimoNumero()
+        [HttpGet("ObterUltimoNumeroVenda")]
+        public async Task<IActionResult> ObterUltimoNumeroVenda()
         {
             var query = new ObterUltimoNumeroVendaQuery();
             var result = await _mediator.Send(query);
-            return Ok(result.NumeroVenda);
+            return Ok(new { data = result.NumeroVenda });
         }
+
+
     }
 }

@@ -41,6 +41,16 @@
             ValorTotal = CalcularValorTotal();
         }
 
+        public void AtualizarQuantidade(int novaQuantidade)
+        {
+            Quantidade = novaQuantidade;
+        }
+
+        public void AtualizarPreco(decimal novoPreco)
+        {
+            PrecoUnitario = novoPreco;
+        }
+
         private void ValidarQuantidade(int quantidade)
         {
             if (quantidade <= 0)

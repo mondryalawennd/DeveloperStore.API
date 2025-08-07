@@ -23,10 +23,18 @@ namespace DeveloperStore.Application.Vendas.AlterarVenda
 
         public async Task<AlterarVendaResult> Handle(AlterarVendaCommand request, CancellationToken cancellationToken)
         {
+            
             var venda = await _vendaRepository.GetByIdAsync(request.Id);
 
             if (venda == null)
                 return new AlterarVendaResult { Sucesso = false, Mensagem = "Venda não encontrada." };
+
+            venda.ClienteId = request.ClienteId;
+            venda.FilialId = request.FilialId;
+            venda.Cancelado = request.Cancelado;
+            venda.DataVenda = DateTime.Now;
+            venda.ValorTotal = request.ValorTotal;
+            venda.LimparItens();
 
             foreach (var itemDto in request.Itens)
             {
